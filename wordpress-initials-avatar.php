@@ -10,6 +10,28 @@ Author URI: https://github.com/LasseRafn
 License: MIT
 */
 
+if ( is_admin() ){ // admin actions
+	add_action( 'admin_init', 'register_wiaua_settings' );
+	add_action('admin_menu', 'wiaua_settings_menu');
+
+	function wiaua_settings_menu() {
+		add_menu_page('My Cool Plugin Settings', 'Cool Settings', 'administrator', __FILE__, 'my_cool_plugin_settings_page' , plugins_url('/images/icon.png', __FILE__) );
+		add_action( 'admin_init', 'register_my_cool_plugin_settings' );
+	}
+
+	function register_wiaua_settings() {
+		register_setting( 'wiaua-settings', 'use_api' );
+		register_setting( 'wiaua-settings', 'color' );
+		register_setting( 'wiaua-settings', 'background' );
+		register_setting( 'wiaua-settings', 'length' );
+		register_setting( 'wiaua-settings', 'size' );
+	}
+
+	function my_cool_plugin_settings_page() {
+		require_once 'options.php';
+	}
+}
+
 add_filter( 'avatar_defaults', 'add_custom_gravatar' );
 if ( ! function_exists( 'add_custom_gravatar' ) ) {
 	function add_custom_gravatar( $avatar_defaults )
