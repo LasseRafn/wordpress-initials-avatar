@@ -55,7 +55,7 @@ function wordpress_initials_avatar( $avatar, $id_or_email, $size, $default, $alt
 		if ( count( $url ) >= 1 ) {
 			$url = explode( '&', $url[count( $url ) - 1] );
 
-			$args['url'] = str_replace($url[0], '//placehold.it/30x30', $args['url']);
+			$args['url'] = str_replace($url[0], 'https://ui-avatars.com/?name=' . $user->display_name, $args['url']);
 		}
 
 		$url2x       = '//placehold.it/' . ( $size * 2 );
