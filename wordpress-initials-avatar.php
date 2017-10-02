@@ -58,7 +58,7 @@ function wordpress_initials_avatar( $avatar, $id_or_email, $size, $default, $alt
 			$args['url'] = str_replace($url[0], 'https://ui-avatars.com/?name=' . $user->display_name, $args['url']);
 		}
 
-		$url2x       = '//placehold.it/' . ( $size * 2 );
+		$url2x       = 'https://ui-avatars.com/?name=' . $user->display_name  .'&size='. ( $size * 2 );
 
 		$avatar = sprintf(
 			"<img alt='%s' src='%s' srcset='%s' class='%s' height='%d' width='%d' %s/>",
