@@ -31,18 +31,13 @@ function wordpress_initials_avatar( $avatar, $id_or_email, $size, $default, $alt
 	$user = false;
 
 	if ( is_numeric( $id_or_email ) ) {
-
 		$id   = (int) $id_or_email;
 		$user = get_user_by( 'id', $id );
-
-	}
-	elseif ( is_object( $id_or_email ) ) {
-
+	} elseif ( is_object( $id_or_email ) ) {
 		if ( ! empty( $id_or_email->user_id ) ) {
 			$id   = (int) $id_or_email->user_id;
 			$user = get_user_by( 'id', $id );
 		}
-
 	}
 	else {
 		$user = get_user_by( 'email', $id_or_email );
