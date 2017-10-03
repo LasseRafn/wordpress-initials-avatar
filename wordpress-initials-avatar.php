@@ -11,34 +11,30 @@ License: MIT
 */
 
 if ( is_admin() ){ // admin actions
-	add_action( 'admin_init', 'register_wiaua_settings' );
-	add_action('admin_menu', 'wiaua_settings_menu');
+	add_action( 'admin_init', 'register_wiauia_settings' );
+	add_action('admin_menu', 'wiauia_settings_menu');
 
-	function wiaua_settings_menu() {
-		add_menu_page('My Cool Plugin Settings', 'Cool Settings', 'administrator', __FILE__, 'my_cool_plugin_settings_page' , plugins_url('/images/icon.png', __FILE__) );
-		add_action( 'admin_init', 'register_my_cool_plugin_settings' );
+	function wiauia_settings_menu() {
+		add_submenu_page('options-general.php', translate('User Initials Avatar Setitngs', 'wiauia'), 'Avatar settings', 'administrator', __FILE__, 'wiauia_settings_page');
+		add_action( 'admin_init', 'register_wiauia_settings' );
 	}
 
-	function register_wiaua_settings() {
-		register_setting( 'wiaua-settings', 'use_api' );
-		register_setting( 'wiaua-settings', 'color' );
-		register_setting( 'wiaua-settings', 'background' );
-		register_setting( 'wiaua-settings', 'length' );
-		register_setting( 'wiaua-settings', 'size' );
+	function register_wiauia_settings() {
+		register_setting( 'wiauia-settings', 'color' );
+		register_setting( 'wiauia-settings', 'background' );
+		register_setting( 'wiauia-settings', 'length' );
+		register_setting( 'wiauia-settings', 'size' );
 	}
 
-	function my_cool_plugin_settings_page() {
-		require_once 'options.php';
+	function wiauia_enqueue_color_picker(  ) {
+		wp_enqueue_style( 'wp-color-picker' );
+		wp_enqueue_script( 'my-script-handle', plugins_url('settings.js', __FILE__ ), array( 'wp-color-picker' ), false, true );
 	}
-}
+	add_action( 'admin_enqueue_scripts', 'wiauia_enqueue_color_picker' );
 
-add_filter( 'avatar_defaults', 'add_custom_gravatar' );
-if ( ! function_exists( 'add_custom_gravatar' ) ) {
-	function add_custom_gravatar( $avatar_defaults )
-	{
-		$avatar_defaults[ 'initials' ] = 'Initials';
+	function wiauia_settings_page() {
 
-		return $avatar_defaults;
+		require_once __DIR__ . '/options.php';
 	}
 }
 
@@ -46,7 +42,7 @@ add_filter( 'get_avatar', 'wordpress_initials_avatar', 1, 6 );
 
 function wordpress_initials_avatar( $avatar, $id_or_email, $size, $default, $alt, $args )
 {
-	if ( $default !== 'initials' || $args['force_default'] ?? false ) {
+	if ( $default !== 'initials' && $args['force_default'] ?? false ) {
 		return $avatar;
 	}
 
@@ -65,29 +61,46 @@ function wordpress_initials_avatar( $avatar, $id_or_email, $size, $default, $alt
 		$user = get_user_by( 'email', $id_or_email );
 	}
 
+	$name = 'initials';
+
 	if ( $user && is_object( $user ) ) {
-		$url = $args['url'];
-		$url = explode( 'd=', $url );
-
-		if ( count( $url ) >= 1 ) {
-			$url = explode( '&', $url[count( $url ) - 1] );
-
-			$args['url'] = str_replace($url[0], urlencode('https://ui-avatars.com/api/' . urlencode($user->display_name)), $args['url']);
-		}
-
-		$url2x       = urlencode('https://ui-avatars.com/api/' . urlencode($user->display_name) . '/'.  ( $size * 2 ));
-
-		$avatar = sprintf(
-			"<img alt='%s' src='%s' srcset='%s' class='%s' height='%d' width='%d' %s/>",
-			esc_attr( $args['alt'] ),
-			esc_url( $args['url'] ),
-			esc_attr( "$url2x 2x" ),
-			esc_attr( join( ' ', $args['class'] ) ),
-			(int) $args['height'],
-			(int) $args['width'],
-			$args['extra_attr']
-		);
+		$name = $user->display_name;
 	}
+
+	$size = esc_attr( get_option('size', $size));
+	$background = esc_attr( get_option('background', 'ddd'));
+	$color = esc_attr( get_option('color', '222'));
+	$length = esc_attr( get_option('length', 2));
+
+	$color = str_replace('#', '', $color);
+	$background = str_replace('#', '', $background);
+
+	$url = $args['url'];
+	$url = explode( 'd=', $url );
+
+	if ( count( $url ) >= 1 ) {
+		$url = explode( '&', $url[count( $url ) - 1] );
+
+		$args['url'] = str_replace($url[0], urlencode('https://ui-avatars.com/api/' . urlencode($name) . "/{$size}/{$background}/{$color}/{$length}"), $args['url']);
+	}
+
+	$size2x = $size * 2;
+	$url2x       = 'https://ui-avatars.com/api/' . urlencode($name) . "/{$size2x}/{$background}/{$color}/{$length}";
+
+	if(!is_array($args['class'])) {
+		$args['class'] = [$args['class']];
+	}
+
+	$avatar = sprintf(
+		"<img alt='%s' src='%s' srcset='%s' class='%s' height='%d' width='%d' %s/>",
+		esc_attr( $args['alt'] ),
+		esc_url( $args['url'] ),
+		esc_attr( "$url2x 2x" ),
+		esc_attr( implode( ' ', $args['class'] ) ),
+		(int) $args['height'],
+		(int) $args['width'],
+		$args['extra_attr']
+	);
 
 	return $avatar;
 }
