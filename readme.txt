@@ -28,7 +28,7 @@ None so far.
 = 0.7 =
 * Rounded option
 * Uppercase option
-* Solved Issue: #post-9692720
+* Solved Issues: #post-9692720
 
 = 0.52 =
 * Initial release
