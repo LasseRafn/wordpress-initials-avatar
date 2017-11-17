@@ -24,6 +24,8 @@ if ( is_admin() ){ // admin actions
 		register_setting( 'wiauia-settings', 'background' );
 		register_setting( 'wiauia-settings', 'length' );
 		register_setting( 'wiauia-settings', 'size' );
+		register_setting( 'wiauia-settings', 'uppercase' );
+		register_setting( 'wiauia-settings', 'rounded' );
 	}
 
 	function wiauia_enqueue_color_picker(  ) {
@@ -71,6 +73,9 @@ function wordpress_initials_avatar( $avatar, $id_or_email, $size, $default, $alt
 	$background = esc_attr( get_option('background', 'ddd'));
 	$color = esc_attr( get_option('color', '222'));
 	$length = esc_attr( get_option('length', 2));
+	$fontSize = 0.5;
+	$rounded = (string) esc_attr( get_option('rounded', 'false'));
+	$uppercase = (string) esc_attr( get_option('uppercase', 'true'));
 
 	$color = str_replace('#', '', $color);
 	$background = str_replace('#', '', $background);
@@ -81,11 +86,11 @@ function wordpress_initials_avatar( $avatar, $id_or_email, $size, $default, $alt
 	if ( count( $url ) >= 1 ) {
 		$url = explode( '&', $url[count( $url ) - 1] );
 
-		$args['url'] = str_replace($url[0], urlencode('https://ui-avatars.com/api/' . urlencode($name) . "/{$size}/{$background}/{$color}/{$length}"), $args['url']);
+		$args['url'] = str_replace($url[0], urlencode('https://ui-avatars.com/api/' . urlencode($name) . "/{$size}/{$background}/{$color}/{$length}/{$fontSize}/{$rounded}/{$uppercase}"), $args['url']);
 	}
 
 	$size2x = $size * 2;
-	$url2x       = 'https://ui-avatars.com/api/' . urlencode($name) . "/{$size2x}/{$background}/{$color}/{$length}";
+	$url2x       = 'https://ui-avatars.com/api/' . urlencode($name) . "/{$size2x}/{$background}/{$color}/{$length}/{$fontSize}/{$rounded}/{$uppercase}";
 
 	if(!is_array($args['class'])) {
 		$args['class'] = [$args['class']];

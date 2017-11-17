@@ -45,6 +45,26 @@
 					</select>
 				</td>
 			</tr>
+
+			<tr valign="top">
+				<th scope="row"><?php _e( 'Rounded image?', 'wiauia' ); ?></th>
+				<td>
+					<select name="rounded">
+						<option <?php selected( esc_attr( get_option( 'rounded', 'false' ) ) == 'false' ); ?> value="false"><?php echo translate( 'No - Square avatar', 'wiauia' ); ?></option>
+						<option <?php selected( esc_attr( get_option( 'rounded', 'false' ) ) == 'true' ); ?> value="true"><?php echo translate( 'Yes - Rounded avatar', 'wiauia' ); ?></option>
+					</select>
+				</td>
+			</tr>
+
+			<tr valign="top">
+				<th scope="row"><?php _e( 'Uppercase letters?', 'wiauia' ); ?></th>
+				<td>
+					<select name="uppercase">
+						<option <?php selected( esc_attr( get_option( 'uppercase', 'true' ) ) == 'true' ); ?> value="true"><?php echo translate( 'Yes', 'wiauia' ); ?></option>
+						<option <?php selected( esc_attr( get_option( 'uppercase', 'true' ) ) == 'false' ); ?> value="false"><?php echo translate( 'No - Do not modify lettercase', 'wiauia' ); ?></option>
+					</select>
+				</td>
+			</tr>
 		</table>
 
 		<?php submit_button(); ?>
