@@ -10,6 +10,8 @@ Author URI: https://github.com/LasseRafn
 License: MIT
 */
 
+include_once 'utils.php';
+
 if ( is_admin() ) { // admin actions
 	add_action( 'admin_init', 'register_wiauia_settings' );
 	add_action( 'admin_menu', 'wiauia_settings_menu' );
@@ -80,7 +82,8 @@ function wordpress_initials_avatar( $avatar, $id_or_email, $size, $default, $alt
 	$uppercase  = (string) esc_attr( get_option( 'uppercase', 'true' ) );
 
 	$color      = str_replace( '#', '', $color );
-	$background = str_replace( '#', '', $background );
+	// $background = str_replace( '#', '', $background );
+	$background = colorFromText($name);
 
 	$url = $args['url'];
 	$url = explode( 'd=', $url );
