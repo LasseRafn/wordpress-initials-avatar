@@ -23,7 +23,6 @@ if ( is_admin() ) { // admin actions
 		register_setting( 'wiauia-settings', 'color' );
 		register_setting( 'wiauia-settings', 'background' );
 		register_setting( 'wiauia-settings', 'length' );
-		register_setting( 'wiauia-settings', 'size' );
 		register_setting( 'wiauia-settings', 'uppercase' );
 		register_setting( 'wiauia-settings', 'rounded' );
 	}
@@ -41,11 +40,11 @@ if ( is_admin() ) { // admin actions
 	}
 }
 
-add_filter( 'get_avatar', 'wordpress_initials_avatar', 1, 6 );
+add_filter( 'get_avatar_url', 'wordpress_initial_avatar', 10, 3 );
 
-function wordpress_initials_avatar( $avatar, $id_or_email, $size, $default, $alt, $args ) {
-	if ( $default !== 'initials' && $args['force_default'] ?? false ) {
-		return $avatar;
+function wordpress_initial_avatar( $url, $id_or_email, $args ) {
+	if ( $args['default'] !== 'initials' && $args['force_default'] ?? false ) {
+		return $url;
 	}
 
 	$user = false;
@@ -70,8 +69,7 @@ function wordpress_initials_avatar( $avatar, $id_or_email, $size, $default, $alt
 		$name = $user->display_name;
 	}
 
-	$size       = esc_attr( get_option( 'size', $size ) );
-	$size2x = $size * 2;
+	$size       = $args['size'];
 	$background = esc_attr( get_option( 'background', 'ddd' ) );
 	$color      = esc_attr( get_option( 'color', '222' ) );
 	$length     = esc_attr( get_option( 'length', 2 ) );
@@ -82,33 +80,15 @@ function wordpress_initials_avatar( $avatar, $id_or_email, $size, $default, $alt
 	$color      = str_replace( '#', '', $color );
 	$background = str_replace( '#', '', $background );
 
-	$url = $args['url'];
-	$url = explode( 'd=', $url );
+	$param      = explode( 'd=', $url );
 
-	if ( count( $url ) >= 1 ) {
-		$url = explode( '&', $url[ count( $url ) - 1 ] );
-
-		$url2x  = str_replace( $url[0], urlencode( 'https://ui-avatars.com/api/' . urlencode( $name ) . "/{$size2x}/{$background}/{$color}/{$length}/{$fontSize}/{$rounded}/{$uppercase}" ), $args['url'] );
-		$args['url'] = str_replace( $url[0], urlencode( 'https://ui-avatars.com/api/' . urlencode( $name ) . "/{$size}/{$background}/{$color}/{$length}/{$fontSize}/{$rounded}/{$uppercase}" ), $args['url'] );
+	if ( count( $param ) >= 1 ) {
+		$param = explode( '&', $param[1] );
+		$url   = str_replace( $param[0], urlencode( 'https://ui-avatars.com/api/' . urlencode( $name ) . "/{$size}/{$background}/{$color}/{$length}/{$fontSize}/{$rounded}/{$uppercase}" ), $url );
 	} else {
-		$args['url'] = urlencode( 'https://ui-avatars.com/api/' . urlencode( $name ) . "/{$size}/{$background}/{$color}/{$length}/{$fontSize}/{$rounded}/{$uppercase}" );
-		$url2x  = 'https://ui-avatars.com/api/' . urlencode( $name ) . "/{$size2x}/{$background}/{$color}/{$length}/{$fontSize}/{$rounded}/{$uppercase}";
+		$url   = urlencode( 'https://ui-avatars.com/api/' . urlencode( $name ) . "/{$size}/{$background}/{$color}/{$length}/{$fontSize}/{$rounded}/{$uppercase}" );
 	}
 
-	if ( ! is_array( $args['class'] ) ) {
-		$args['class'] = [ $args['class'] ];
-	}
+	return $url;
 
-	$avatar = sprintf(
-		"<img alt='%s' src='%s' srcset='%s' class='avatar %s' height='%d' width='%d' %s/>",
-		esc_attr( $args['alt'] ),
-		esc_url( $args['url'] ),
-		esc_attr( "$url2x 2x" ),
-		esc_attr( implode( ' ', $args['class'] ) ),
-		(int) $args['height'],
-		(int) $args['width'],
-		$args['extra_attr']
-	);
-
-	return $avatar;
 }

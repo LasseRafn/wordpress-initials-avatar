@@ -30,23 +30,6 @@
 			</tr>
 
 			<tr valign="top">
-				<th scope="row"><?php _e( 'Image size', 'wiauia' ); ?></th>
-				<td>
-					<select name="size">
-						<option <?php selected( esc_attr( get_option( 'size', 64 ) ) == 16 ); ?> value="16"><?php echo sprintf( translate( '%sx%s pixels', 'wiauia' ), 16, 16 ); ?></option>
-						<option <?php selected( esc_attr( get_option( 'size', 64 ) ) == 24 ); ?> value="24"><?php echo sprintf( translate( '%sx%s pixels', 'wiauia' ), 24, 24 ); ?></option>
-						<option <?php selected( esc_attr( get_option( 'size', 64 ) ) == 32 ); ?> value="32"><?php echo sprintf( translate( '%sx%s pixels', 'wiauia' ), 32, 32 ); ?></option>
-						<option <?php selected( esc_attr( get_option( 'size', 64 ) ) == 48 ); ?> value="48"><?php echo sprintf( translate( '%sx%s pixels', 'wiauia' ), 48, 48 ); ?></option>
-						<option <?php selected( esc_attr( get_option( 'size', 64 ) ) == 64 ); ?> value="64"><?php echo sprintf( translate( '%sx%s pixels', 'wiauia' ), 64, 64 ); ?></option>
-						<option <?php selected( esc_attr( get_option( 'size', 64 ) ) == 96 ); ?> value="96"><?php echo sprintf( translate( '%sx%s pixels', 'wiauia' ), 96, 96 ); ?></option>
-						<option <?php selected( esc_attr( get_option( 'size', 64 ) ) == 128 ); ?> value="128"><?php echo sprintf( translate( '%sx%s pixels', 'wiauia' ), 128, 128 ); ?></option>
-						<option <?php selected( esc_attr( get_option( 'size', 64 ) ) == 192 ); ?> value="192"><?php echo sprintf( translate( '%sx%s pixels', 'wiauia' ), 192, 192 ); ?></option>
-						<option <?php selected( esc_attr( get_option( 'size', 64 ) ) == 256 ); ?> value="256"><?php echo sprintf( translate( '%sx%s pixels', 'wiauia' ), 256, 256 ); ?></option>
-					</select>
-				</td>
-			</tr>
-
-			<tr valign="top">
 				<th scope="row"><?php _e( 'Rounded image?', 'wiauia' ); ?></th>
 				<td>
 					<select name="rounded">
