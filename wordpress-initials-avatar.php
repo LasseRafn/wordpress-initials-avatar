@@ -40,9 +40,9 @@ if ( is_admin() ) { // admin actions
 	}
 }
 
-add_filter( 'get_avatar_url', 'wordpress_initial_avatar', 10, 3 );
+add_filter( 'get_avatar_url', 'wordpress_initials_avatar', 10, 3 );
 
-function wordpress_initial_avatar( $url, $id_or_email, $args ) {
+function wordpress_initials_avatar( $url, $id_or_email, $args ) {
 	if ( $args['default'] !== 'initials' && $args['force_default'] ?? false ) {
 		return $url;
 	}
