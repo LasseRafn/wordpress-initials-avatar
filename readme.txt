@@ -1,4 +1,4 @@
-== Wordpress Initial Avatars ==
+== WordPress Initial Avatars ==
 Tested up to: 4.8.2
 Requires at least: 3.5
 Requires PHP: 5.6
@@ -15,8 +15,8 @@ We use https://ui-avatars.com to generate avatars. You can pick length of initia
 
 == Installation ==
 
-1. Upload the plugin files to the `/wp-content/plugins/wp-initials-avatar` directory, or install the plugin through the Wordpress plugins screen directly.
-2. Activate the plugin through the 'Plugins' screen in Wordpress.
+1. Upload the plugin files to the `/wp-content/plugins/wp-initials-avatar` directory, or install the plugin through the WordPress plugins screen directly.
+2. Activate the plugin through the 'Plugins' screen in WordPress.
 3. Navigate to Settings -> Avatar settings and configure the plugin
 
 == Frequently Asked Questions ==
