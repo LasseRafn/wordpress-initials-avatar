@@ -44,7 +44,7 @@ if ( is_admin() ) { // admin actions
 add_filter( 'get_avatar', 'wordpress_initials_avatar', 1, 6 );
 
 function wordpress_initials_avatar( $avatar, $id_or_email, $size, $default, $alt, $args ) {
-	if ( $default !== 'initials' && $args['force_default'] ?? false ) {
+	if ( $default !== 'initials' && ( $args['force_default'] || false ) ) {
 		return $avatar;
 	}
 
