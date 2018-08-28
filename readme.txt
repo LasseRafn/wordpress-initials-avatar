@@ -5,7 +5,7 @@ Requires PHP: 5.6
 Stable tag: 0.8
 License: MIT
 License URI: https://opensource.org/licenses/MIT
-Contributors: LasseRafn
+Contributors: LasseRafn, mayukojpn, abecoffman
 
 Plugin to replace default avatars with user initials generated from their name.
 
