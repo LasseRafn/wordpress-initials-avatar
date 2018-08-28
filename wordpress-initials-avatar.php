@@ -1,7 +1,7 @@
 <?php
 
 /*
-Plugin Name: Wordpress Initials Avatar
+Plugin Name: WordPress Initials Avatar
 Plugin URI: https://github.com/LasseRafn/wordpress-initials-avatar
 Description: Replaces the default avatars with initials
 Version: 0.5
@@ -15,7 +15,7 @@ if ( is_admin() ) { // admin actions
 	add_action( 'admin_menu', 'wiauia_settings_menu' );
 
 	function wiauia_settings_menu() {
-		add_submenu_page( 'options-general.php', translate( 'User Initials Avatar Setitngs', 'wiauia' ), 'Avatar settings', 'administrator', __FILE__, 'wiauia_settings_page' );
+		add_submenu_page( 'options-general.php', __( 'User Initials Avatar Setitngs', 'wp-initials-avatar' ), 'Avatar settings', 'administrator', __FILE__, 'wiauia_settings_page' );
 		add_action( 'admin_init', 'register_wiauia_settings' );
 	}
 
@@ -43,7 +43,7 @@ if ( is_admin() ) { // admin actions
 add_filter( 'get_avatar_url', 'wordpress_initials_avatar', 10, 3 );
 
 function wordpress_initials_avatar( $url, $id_or_email, $args ) {
-	if ( $args['default'] !== 'initials' && $args['force_default'] ?? false ) {
+	if ( $args['default'] !== 'initials' && ( $args['force_default'] || false ) ) {
 		return $url;
 	}
 
