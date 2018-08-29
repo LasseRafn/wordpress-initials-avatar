@@ -8,6 +8,7 @@ Version: 0.8
 Author: lasserafn
 Author URI: https://github.com/LasseRafn
 License: MIT
+Text Domain: wp-initials-avatar
 */
 
 if ( is_admin() ) { // admin actions
