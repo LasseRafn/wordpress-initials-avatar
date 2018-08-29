@@ -15,7 +15,7 @@ if ( is_admin() ) { // admin actions
 	add_action( 'admin_menu', 'wp_ui_avatars_settings_menu' );
 
 	function wp_ui_avatars_settings_menu() {
-		add_submenu_page( 'options-general.php', __( 'User Initials Avatar Setitngs', 'wp-initials-avatar' ), 'Avatar settings', 'administrator', __FILE__, 'wp_ui_avatars_settings_page' );
+		add_submenu_page( 'options-general.php', __( 'User Initials Avatar Setitngs', 'wp-initials-avatar' ), __( 'Avatar settings', 'wp-initials-avatar' ), 'administrator', __FILE__, 'wp_ui_avatars_settings_page' );
 		add_action( 'admin_init', 'register_wp_ui_avatars_settings' );
 	}
 
