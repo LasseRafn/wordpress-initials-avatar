@@ -30,7 +30,7 @@
 			</tr>
 
 			<tr valign="top">
-				<th scope="row"><?php _e( 'Rounded image?', 'wiauia' ); ?></th>
+				<th scope="row"><?php _e( 'Rounded image?', 'wp-initials-avatar' ); ?></th>
 				<td>
 					<select name="rounded">
 						<option <?php selected( esc_attr( get_option( 'rounded', 'false' ) ) == 'false' ); ?> value="false"><?php echo __( 'No - Square avatar', 'wp-initials-avatar' ); ?></option>
