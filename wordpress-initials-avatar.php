@@ -43,7 +43,7 @@ if ( is_admin() ) { // admin actions
 add_filter( 'get_avatar_url', 'wordpress_initials_avatar', 10, 3 );
 
 function wordpress_initials_avatar( $url, $id_or_email, $args ) {
-	if ( $args['default'] !== 'initials' && ( $args['force_default'] || false ) ) {
+	if ( $args['default'] !== 'initials' && ( $args['force_default'] || false ) || !preg_match('/gravatar.com/', $url) ) {
 		return $url;
 	}
 
