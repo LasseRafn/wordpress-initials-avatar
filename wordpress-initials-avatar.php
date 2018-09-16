@@ -43,26 +43,37 @@ if ( is_admin() ) { // admin actions
 
 add_filter( 'get_avatar_url', 'wordpress_initials_avatar', 10, 3 );
 
+/**
+ * Filters the avatar URL.
+ *
+ * @param string $url         The URL of the avatar.
+ * @param mixed  $id_or_email The Gravatar to retrieve. Accepts a user_id, gravatar md5 hash,
+ *                            user email, WP_User object, WP_Post object, or WP_Comment object.
+ * @param array  $args        Arguments passed to get_avatar_data(), after processing.
+ */
 function wordpress_initials_avatar( $url, $id_or_email, $args ) {
-	if ( $args['default'] !== 'initials' && ( $args['force_default'] || false ) ) {
+	if ( $args['default'] !== 'initials' && ( $args['force_default'] || false ) || !preg_match('/gravatar.com/', $url) ) {
 		return $url;
 	}
 
 	$user = false;
-
-	if ( is_numeric( $id_or_email ) ) {
-		$id   = (int) $id_or_email;
-		$user = get_user_by( 'id', $id );
-	} elseif ( is_object( $id_or_email && ! empty( $id_or_email->user_id ) ) ) {
-		$id   = (int) $id_or_email->user_id;
-		$user = get_user_by( 'id', $id );
-	} else {
-		$user = get_user_by( 'email', $id_or_email );
-	}
-
 	$name = 'initials';
 
-	if ( $id_or_email instanceof WP_Comment ) {
+	if ( is_object( $id_or_email ) && isset( $id_or_email->comment_ID ) ) {
+		$id_or_email = get_comment( $id_or_email );
+	}
+	// Process the user identifier.
+	if ( is_numeric( $id_or_email ) ) {
+		$user = get_user_by( 'id', absint( $id_or_email ) );
+	} elseif ( is_string( $id_or_email ) ) {
+		$user = get_user_by( 'email', $id_or_email );
+	} elseif ( $id_or_email instanceof WP_User ) {
+		// User Object
+		$user = $id_or_email;
+	} elseif ( $id_or_email instanceof WP_Post ) {
+		// Post Object
+		$user = get_user_by( 'id', (int) $id_or_email->post_author );
+	} elseif ( $id_or_email instanceof WP_Comment ) {
 		$name = get_comment_author( $id_or_email->ID );
 	}
 
