@@ -2,7 +2,7 @@
 Tested up to: 4.8.2
 Requires at least: 3.5
 Requires PHP: 5.6
-Stable tag: 0.85
+Stable tag: 0.9
 License: MIT
 License URI: https://opensource.org/licenses/MIT
 Contributors: LasseRafn, mayukojpn, abecoffman
@@ -24,6 +24,9 @@ We use https://ui-avatars.com to generate avatars. You can pick length of initia
 None so far.
 
 == Changelog ==
+
+= 0.9 =
+* Fixes and conflict handling (thanks mayukojpn - https://github.com/LasseRafn/wordpress-initials-avatar/pull/11)
 
 = 0.85 =
 * More localization (thanks mayukojpn)
