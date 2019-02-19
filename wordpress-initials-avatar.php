@@ -11,6 +11,8 @@ License: MIT
 Text Domain: wp-initials-avatar
 */
 
+include_once 'utils.php';
+
 if ( is_admin() ) { // admin actions
 	add_action( 'admin_init', 'register_wp_ui_avatars_settings' );
 	add_action( 'admin_menu', 'wp_ui_avatars_settings_menu' );
@@ -90,7 +92,8 @@ function wordpress_initials_avatar( $url, $id_or_email, $args ) {
 	$uppercase  = (string) esc_attr( get_option( 'uppercase', 'true' ) );
 
 	$color      = str_replace( '#', '', $color );
-	$background = str_replace( '#', '', $background );
+	// $background = str_replace( '#', '', $background );
+	$background = colorFromText($name);
 
 	$param      = explode( 'd=', $url );
 
